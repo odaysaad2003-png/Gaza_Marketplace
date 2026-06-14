@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import {MainContainer} from "@/components/layout/main-container";
 import {Button} from "@/components/ui/button";
-import {Card, CardContent} from "@/components/ui/card";
+import {LatestProductsPreview} from "@/features/products/components/latest-products-preview";
 
 export default function HomePage() {
     return (
@@ -10,7 +10,7 @@ export default function HomePage() {
             <section className="grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
                 <div className="space-y-8">
                     <div className="inline-flex rounded-full border bg-muted/50 px-4 py-2 text-sm text-muted-foreground">
-                        منصة تجارية محلية
+                        منصة عربية محلية لسوق غزة
                     </div>
 
                     <div className="space-y-5">
@@ -35,36 +35,7 @@ export default function HomePage() {
                     </div>
                 </div>
 
-                <Card className="overflow-hidden border-primary/10 bg-gradient-to-br from-primary/10 via-background to-muted shadow-sm">
-                    <CardContent className="p-6">
-                        <div className="space-y-4 rounded-3xl border bg-background/80 p-4 shadow-sm">
-                            <div className="flex items-center justify-between">
-                                <span className="text-sm font-medium">منتجات مميزة</span>
-                                <span className="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">غزة</span>
-                            </div>
-
-                            <div className="grid gap-3">
-                                {[
-                                    ["هاتف سامسونج A52", "₪ 750", "موبايلات"],
-                                    ["كنبة زاوية 7 مقاعد", "₪ 1,200", "أثاث"],
-                                    ["غسالة أوتوماتيك", "₪ 850", "أجهزة منزلية"],
-                                ].map(([title, price, category]) => (
-                                    <div
-                                        key={title}
-                                        className="flex items-center justify-between rounded-2xl border bg-card p-4"
-                                    >
-                                        <div>
-                                            <h3 className="font-medium">{title}</h3>
-                                            <p className="mt-1 text-sm text-muted-foreground">{category}</p>
-                                        </div>
-
-                                        <span className="font-bold text-primary">{price}</span>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </CardContent>
-                </Card>
+                <LatestProductsPreview />
             </section>
         </MainContainer>
     );

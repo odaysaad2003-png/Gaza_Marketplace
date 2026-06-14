@@ -368,7 +368,7 @@ Benefits:
 * Safer mock API.
 * Better autocomplete.
 * Easier refactoring.
-* Fewer runtime mistakes
+* Fewer runtime mistakes.
 
 ---
 
