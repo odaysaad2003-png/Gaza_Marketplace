@@ -2,6 +2,8 @@ import type {Metadata} from "next";
 import {Cairo} from "next/font/google";
 import "./globals.css";
 
+import {Footer} from "@/components/layout/footer";
+import {Navbar} from "@/components/layout/navbar";
 import {ThemeProvider} from "@/components/theme/theme-provider";
 
 const cairo = Cairo({
@@ -22,9 +24,15 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="ar" dir="rtl" suppressHydrationWarning>
-            <body className={`${cairo.variable} font-sans antialiased`}>
+            <body className={`${cairo.variable} min-h-screen bg-background font-sans text-foreground antialiased`}>
                 <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-                    {children}
+                    <div className="flex min-h-screen flex-col">
+                        <Navbar />
+
+                        <main className="flex-1">{children}</main>
+
+                        <Footer />
+                    </div>
                 </ThemeProvider>
             </body>
         </html>
