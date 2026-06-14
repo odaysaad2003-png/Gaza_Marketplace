@@ -10,7 +10,7 @@ export default function HomePage() {
             <section className="grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
                 <div className="space-y-8">
                     <div className="inline-flex rounded-full border bg-muted/50 px-4 py-2 text-sm text-muted-foreground">
-                        منصة عربية محلية لسوق غزة
+                        منصة تجارية محلية
                     </div>
 
                     <div className="space-y-5">
