@@ -19,6 +19,7 @@ export function ProductCard({product}: ProductCardProps) {
         <Card className="group overflow-hidden transition-all duration-200 hover:-translate-y-1 hover:shadow-md">
             <Link href={`/products/${product.slug}`} className="block">
                 <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+                    
                     <Image
                         src={mainImage}
                         alt={product.title}
