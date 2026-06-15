@@ -65,3 +65,17 @@ export async function createProduct(input: CreateProductInput) {
 
     return newProduct;
 }
+
+export async function getSimilarProducts(product: Product, limit = 4) {
+    await wait();
+
+    return products
+    .filter((item) => {
+        const isSameProduct = item.id === product.id;
+        const isSameCategory = item.category === product.category;
+
+        return !isSameProduct && isSameCategory;
+    })
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    .slice(0, limit);
+}
