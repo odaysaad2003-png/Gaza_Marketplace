@@ -12,10 +12,7 @@ export const mainNavItems: NavItem[] = [
         label: "المنتجات",
         href: "/products",
     },
-    {
-        label: "أضف منتجك",
-        href: "/products/create",
-    },
+   
     {
         label: "المفضلة",
         href: "/favorites",
