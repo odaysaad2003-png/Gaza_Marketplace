@@ -6,6 +6,7 @@ import {Footer} from "@/components/layout/footer";
 import {Navbar} from "@/components/layout/navbar";
 import {ThemeProvider} from "@/components/theme/theme-provider";
 import {QueryProvider} from "@/components/providers/query-provider";
+import {FavoritesProvider} from "@/features/favorites/hooks/use-favorites";
 const cairo = Cairo({
     subsets: ["arabic", "latin"],
     variable: "--font-cairo",
@@ -27,13 +28,15 @@ export default function RootLayout({
             <body className={`${cairo.variable} min-h-screen bg-background font-sans text-foreground antialiased`}>
                 <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
                     <QueryProvider>
-                        <div className="flex min-h-screen flex-col">
-                            <Navbar />
+                        <FavoritesProvider>
+                            <div className="flex min-h-screen flex-col">
+                                <Navbar />
 
-                            <main className="flex-1">{children}</main>
+                                <main className="flex-1">{children}</main>
 
-                            <Footer />
-                        </div>
+                                <Footer />
+                            </div>
+                        </FavoritesProvider>
                     </QueryProvider>
                 </ThemeProvider>
             </body>

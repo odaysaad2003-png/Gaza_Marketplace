@@ -3,8 +3,8 @@
 import Link from "next/link";
 import {Heart, ShoppingBag} from "lucide-react";
 
-import {Button} from "@/components/ui/button";
 import {SkeletonList} from "@/components/shared/loading-skeleton";
+import {Button} from "@/components/ui/button";
 import {Skeleton} from "@/components/ui/skeleton";
 import {ProductGrid} from "@/features/products/components/product-grid";
 import {useProducts} from "@/features/products/hooks/use-products";
@@ -90,20 +90,11 @@ function FavoritesSkeleton() {
                 <Skeleton className="mt-3 h-4 w-64" />
             </div>
 
-            <SkeletonList count={4} className="gap-5 sm:grid-cols-2 lg:grid-cols-4">
-                {(index) => (
-                    <div key={index} className="overflow-hidden rounded-3xl border bg-card">
-                        <Skeleton className="aspect-[4/3] w-full rounded-none" />
-
-                        <div className="space-y-4 p-4">
-                            <Skeleton className="h-5 w-3/4" />
-                            <Skeleton className="h-4 w-full" />
-                            <Skeleton className="h-4 w-2/3" />
-                            <Skeleton className="h-6 w-24" />
-                        </div>
-                    </div>
-                )}
-            </SkeletonList>
+            <SkeletonList
+                count={4}
+                className="gap-5 sm:grid-cols-2 lg:grid-cols-4"
+                itemClassName="h-[315px] overflow-hidden rounded-3xl border bg-card"
+            />
         </div>
     );
 }
