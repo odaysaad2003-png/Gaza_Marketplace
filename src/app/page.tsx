@@ -1,42 +1,36 @@
-import Link from "next/link";
-
 import {MainContainer} from "@/components/layout/main-container";
-import {Button} from "@/components/ui/button";
-import {LatestProductsPreview} from "@/features/products/components/latest-products-preview";
+import {ProductGrid} from "@/features/products/components/product-grid";
+import {getLatestProducts} from "@/features/products/api/products.mock-api";
+import {HeroSection} from "@/features/home/components/hero-section";
+import {FeaturedCategoriesSection} from "@/features/home/components/featured-categories-section";
+import {HowItWorksSection} from "@/features/home/components/how-it-works-section";
+import {HomeCtaSection} from "@/features/home/components/home-cta-section";
+import {SectionHeading} from "@/components/shared/section-heading";
 
-export default function HomePage() {
+export default async function HomePage() {
+    const latestProducts = await getLatestProducts(8);
+
     return (
-        <MainContainer className="py-16 sm:py-24">
-            <section className="grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
-                <div className="space-y-8">
-                    <div className="inline-flex rounded-full border bg-muted/50 px-4 py-2 text-sm text-muted-foreground">
-                        منصة عربية محلية لسوق غزة
-                    </div>
+        <MainContainer>
+            <HeroSection latestProducts={latestProducts} />
 
-                    <div className="space-y-5">
-                        <h1 className="max-w-3xl text-4xl font-bold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
-                            بيع واشتري بسهولة داخل غزة
-                        </h1>
+            <FeaturedCategoriesSection />
 
-                        <p className="max-w-2xl text-base leading-8 text-muted-foreground sm:text-lg">
-                            Mini Marketplace Gaza هو مشروع تدريبي احترافي لعرض المنتجات، البحث عنها، حفظ المفضلة، وإضافة
-                            منتجات جديدة بتجربة عربية RTL قريبة من مشاريع سوق العمل.
-                        </p>
-                    </div>
-
-                    <div className="flex flex-col gap-3 sm:flex-row">
-                        <Button asChild size="lg">
-                            <Link href="/products">تصفح المنتجات</Link>
-                        </Button>
-
-                        <Button asChild size="lg" variant="outline">
-                            <Link href="/products/create">أضف منتجك الآن</Link>
-                        </Button>
-                    </div>
+            <section className="py-10">
+                <div className="mb-7 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+                    <SectionHeading
+                        eyebrow="وصل حديثًا"
+                        title="أحدث المنتجات"
+                        description="مجموعة مختارة من آخر المنتجات المضافة داخل السوق."
+                    />
                 </div>
 
-                <LatestProductsPreview />
+                <ProductGrid products={latestProducts} />
             </section>
+
+            <HowItWorksSection />
+
+            <HomeCtaSection />
         </MainContainer>
     );
 }
