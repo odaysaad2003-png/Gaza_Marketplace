@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import {Heart, ShoppingBag} from "lucide-react";
+import {ArrowLeft, Heart, RefreshCcw, ShoppingBag, Sparkles, Trash2} from "lucide-react";
 
 import {SkeletonList} from "@/components/shared/loading-skeleton";
 import {Button} from "@/components/ui/button";
+import {Card} from "@/components/ui/card";
 import {Skeleton} from "@/components/ui/skeleton";
 import {ProductGrid} from "@/features/products/components/product-grid";
 import {useProducts} from "@/features/products/hooks/use-products";
@@ -23,12 +24,18 @@ export function FavoritesView() {
 
     if (isError) {
         return (
-            <div className="rounded-[2rem] border border-destructive/30 bg-destructive/10 p-8 text-center">
-                <h2 className="text-2xl font-bold text-destructive">حدث خطأ أثناء تحميل المفضلة</h2>
+            <div className="mx-auto max-w-2xl rounded-[2rem] border border-destructive/30 bg-destructive/10 p-8 text-center shadow-sm">
+                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-destructive/10 text-destructive">
+                    <RefreshCcw className="h-6 w-6" />
+                </div>
 
-                <p className="mt-3 text-sm text-muted-foreground">لم نتمكن من تحميل المنتجات الآن. حاول مرة أخرى.</p>
+                <h2 className="mt-5 text-2xl font-bold text-destructive">حدث خطأ أثناء تحميل المفضلة</h2>
 
-                <Button className="mt-6" variant="outline" onClick={() => refetch()}>
+                <p className="mx-auto mt-3 max-w-md text-sm leading-7 text-muted-foreground">
+                    لم نتمكن من تحميل المنتجات الآن. حاول مرة أخرى.
+                </p>
+
+                <Button className="mt-6 rounded-full" variant="outline" onClick={() => refetch()}>
                     إعادة المحاولة
                 </Button>
             </div>
@@ -41,15 +48,54 @@ export function FavoritesView() {
 
     return (
         <div className="space-y-8">
-            <div className="flex flex-col gap-3 rounded-[2rem] border bg-card p-5 shadow-sm sm:flex-row sm:items-center sm:justify-between">
-                <div>
-                    <h2 className="text-xl font-bold">منتجاتك المحفوظة</h2>
-                    <p className="mt-1 text-sm text-muted-foreground">
-                        لديك {favoriteProducts.length} منتج محفوظ في المفضلة.
-                    </p>
-                </div>
+            <Card className="overflow-hidden rounded-[2rem] border-border/70 bg-card/90 p-6 shadow-sm shadow-black/[0.03]">
+                <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+                    <div className="space-y-4">
+                        <div className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-secondary/70 px-4 py-2 text-sm font-medium text-primary">
+                            <Heart className="h-4 w-4 fill-current" />
+                            المفضلة
+                        </div>
 
-                <Button variant="outline" onClick={clearFavorites}>
+                        <div>
+                            <h1 className="text-2xl font-black tracking-tight text-foreground sm:text-3xl">
+                                منتجاتك المحفوظة
+                            </h1>
+
+                            <p className="mt-2 max-w-2xl text-sm leading-7 text-muted-foreground">
+                                هنا تجد المنتجات التي أعجبتك وتريد الرجوع لها بسرعة لاحقًا.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="grid gap-3 sm:grid-cols-2 lg:min-w-80">
+                        <div className="rounded-3xl border border-border/70 bg-background/70 p-4">
+                            <p className="text-sm text-muted-foreground">عدد المنتجات</p>
+                            <p className="mt-1 text-2xl font-black text-primary">{favoriteProducts.length}</p>
+                        </div>
+
+                        <div className="rounded-3xl border border-border/70 bg-background/70 p-4">
+                            <p className="text-sm text-muted-foreground">الحالة</p>
+                            <p className="mt-1 font-bold text-foreground">محفوظة محليًا</p>
+                        </div>
+                    </div>
+                </div>
+            </Card>
+
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <Button asChild variant="outline" className="rounded-full bg-background/70">
+                    <Link href="/products">
+                        <ShoppingBag className="h-4 w-4" />
+                        تصفح منتجات أخرى
+                    </Link>
+                </Button>
+
+                <Button
+                    type="button"
+                    variant="outline"
+                    className="rounded-full border-destructive/30 text-destructive hover:bg-destructive/10 hover:text-destructive"
+                    onClick={clearFavorites}
+                >
+                    <Trash2 className="h-4 w-4" />
                     مسح المفضلة
                 </Button>
             </div>
@@ -61,23 +107,50 @@ export function FavoritesView() {
 
 function FavoritesEmptyState() {
     return (
-        <div className="rounded-[2rem] border bg-card p-10 text-center shadow-sm">
-            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-3xl bg-primary/10 text-primary">
-                <Heart className="h-8 w-8" />
+        <div className="mx-auto max-w-3xl overflow-hidden rounded-[2rem] border border-border/70 bg-card/90 p-8 text-center shadow-sm shadow-black/[0.03] sm:p-10">
+            <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-[1.75rem] bg-primary/10 text-primary">
+                <Heart className="h-10 w-10" />
             </div>
 
-            <h2 className="mt-6 text-2xl font-bold">لا توجد منتجات في المفضلة</h2>
+            <div className="mt-7 space-y-3">
+                <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-border/70 bg-secondary/70 px-4 py-2 text-sm font-medium text-primary">
+                    <Sparkles className="h-4 w-4" />
+                    ابدأ بحفظ المنتجات
+                </div>
 
-            <p className="mx-auto mt-3 max-w-md text-sm leading-7 text-muted-foreground">
-                احفظ المنتجات التي تعجبك من خلال الضغط على زر القلب، ثم ارجع لهذه الصفحة لمراجعتها بسرعة.
-            </p>
+                <h2 className="text-2xl font-black tracking-tight text-foreground sm:text-3xl">
+                    لا توجد منتجات في المفضلة بعد
+                </h2>
 
-            <Button asChild className="mt-6 rounded-2xl">
-                <Link href="/products">
-                    <ShoppingBag className="h-5 w-5" />
-                    تصفح المنتجات
-                </Link>
-            </Button>
+                <p className="mx-auto max-w-md text-sm leading-7 text-muted-foreground sm:text-base">
+                    احفظ المنتجات التي تعجبك من خلال الضغط على زر القلب، ثم ارجع لهذه الصفحة لمراجعتها بسرعة.
+                </p>
+            </div>
+
+            <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
+                <Button
+                    asChild
+                    size="lg"
+                    className="rounded-full px-6 shadow-sm shadow-primary/20 transition-all duration-200 hover:-translate-y-0.5"
+                >
+                    <Link href="/products">
+                        <ShoppingBag className="h-5 w-5" />
+                        تصفح المنتجات
+                    </Link>
+                </Button>
+
+                <Button
+                    asChild
+                    size="lg"
+                    variant="outline"
+                    className="rounded-full bg-background/70 px-6 transition-all duration-200 hover:-translate-y-0.5"
+                >
+                    <Link href="/">
+                        العودة للرئيسية
+                        <ArrowLeft className="h-4 w-4" />
+                    </Link>
+                </Button>
+            </div>
         </div>
     );
 }
@@ -85,15 +158,21 @@ function FavoritesEmptyState() {
 function FavoritesSkeleton() {
     return (
         <div className="space-y-8">
-            <div className="rounded-[2rem] border bg-card p-5">
-                <Skeleton className="h-7 w-48" />
-                <Skeleton className="mt-3 h-4 w-64" />
+            <div className="rounded-[2rem] border border-border/70 bg-card/90 p-6">
+                <Skeleton className="h-9 w-32 rounded-full" />
+                <Skeleton className="mt-5 h-8 w-56" />
+                <Skeleton className="mt-3 h-4 w-72" />
+
+                <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:max-w-md">
+                    <Skeleton className="h-24 rounded-3xl" />
+                    <Skeleton className="h-24 rounded-3xl" />
+                </div>
             </div>
 
             <SkeletonList
                 count={4}
                 className="gap-5 sm:grid-cols-2 lg:grid-cols-4"
-                itemClassName="h-[315px] overflow-hidden rounded-3xl border bg-card"
+                itemClassName="h-[360px] overflow-hidden rounded-3xl border border-border/70 bg-card"
             />
         </div>
     );
