@@ -8,6 +8,8 @@ import {formatDate, formatPrice} from "@/lib/formatters";
 
 import type {Product} from "../types/product.types";
 
+import {FavoriteButton} from "@/features/favorites/components/favorite-button";
+
 type ProductCardProps = {
     product: Product;
 };
@@ -19,7 +21,6 @@ export function ProductCard({product}: ProductCardProps) {
         <Card className="group overflow-hidden transition-all duration-200 hover:-translate-y-1 hover:shadow-md">
             <Link href={`/products/${product.slug}`} className="block">
                 <div className="relative aspect-[4/3] overflow-hidden bg-muted">
-                    
                     <Image
                         src={mainImage}
                         alt={product.title}
@@ -27,6 +28,10 @@ export function ProductCard({product}: ProductCardProps) {
                         sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                         className="object-cover transition-transform duration-300 group-hover:scale-105"
                     />
+
+                    <div className="absolute left-3 top-3 z-10">
+                        <FavoriteButton productId={product.id} />
+                    </div>
 
                     {product.isFeatured ? <Badge className="absolute right-3 top-3">مميز</Badge> : null}
                 </div>

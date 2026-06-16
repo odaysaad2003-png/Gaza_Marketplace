@@ -1,9 +1,9 @@
-import {CalendarDays, Heart, MapPin, PackageCheck, Tag} from "lucide-react";
-
-import {Badge} from "@/components/ui/badge";
-import {Button} from "@/components/ui/button";
+import { CalendarDays, MapPin, PackageCheck, Tag} from "lucide-react";
 import {Card, CardContent} from "@/components/ui/card";
+import {Badge} from "@/components/ui/badge";
 import {formatDate, formatPrice} from "@/lib/formatters";
+
+import {FavoriteButton} from "@/features/favorites/components/favorite-button";
 
 import type {Product} from "../types/product.types";
 
@@ -53,10 +53,7 @@ export function ProductInfoCard({product}: ProductInfoCardProps) {
                     <p className="leading-8 text-muted-foreground">{product.description}</p>
                 </div>
 
-                <Button variant="outline" size="lg" className="w-full rounded-2xl">
-                    <Heart className="h-5 w-5" />
-                    إضافة إلى المفضلة
-                </Button>
+                <FavoriteButton productId={product.id} variant="full" />
             </CardContent>
         </Card>
     );
