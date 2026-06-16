@@ -1,9 +1,9 @@
-import { CalendarDays, MapPin, PackageCheck, Tag} from "lucide-react";
-import {Card, CardContent} from "@/components/ui/card";
-import {Badge} from "@/components/ui/badge";
-import {formatDate, formatPrice} from "@/lib/formatters";
+import {CalendarDays, MapPin, PackageCheck, ShieldCheck, Tag} from "lucide-react";
 
+import {Badge} from "@/components/ui/badge";
+import {Card, CardContent} from "@/components/ui/card";
 import {FavoriteButton} from "@/features/favorites/components/favorite-button";
+import {formatDate, formatPrice} from "@/lib/formatters";
 
 import type {Product} from "../types/product.types";
 
@@ -13,19 +13,27 @@ type ProductInfoCardProps = {
 
 export function ProductInfoCard({product}: ProductInfoCardProps) {
     return (
-        <Card className="rounded-[2rem] border-primary/10 bg-card/95 shadow-sm">
-            <CardContent className="space-y-6 p-6">
+        <Card className="overflow-hidden rounded-[2rem] border-border/70 bg-card/90 shadow-sm shadow-black/[0.03] dark:shadow-black/20">
+            <CardContent className="space-y-7 p-6">
                 <div className="space-y-4">
                     <div className="flex flex-wrap items-center gap-2">
-                        {product.isFeatured ? <Badge>مميز</Badge> : null}
-                        <Badge variant="secondary">{product.category}</Badge>
-                        <Badge variant="outline">{product.condition}</Badge>
+                        {product.isFeatured ? <Badge className="rounded-full px-3 py-1">مميز</Badge> : null}
+
+                        <Badge variant="secondary" className="rounded-full px-3 py-1">
+                            {product.category}
+                        </Badge>
+
+                        <Badge variant="outline" className="rounded-full px-3 py-1">
+                            {product.condition}
+                        </Badge>
                     </div>
 
                     <div className="space-y-3">
-                        <h1 className="text-3xl font-bold leading-tight tracking-tight sm:text-4xl">{product.title}</h1>
+                        <h1 className="text-3xl font-black leading-tight tracking-tight text-foreground sm:text-4xl">
+                            {product.title}
+                        </h1>
 
-                        <p className="text-3xl font-extrabold text-primary sm:text-4xl">{formatPrice(product.price)}</p>
+                        <p className="text-3xl font-black text-primary sm:text-4xl">{formatPrice(product.price)}</p>
                     </div>
                 </div>
 
@@ -47,8 +55,11 @@ export function ProductInfoCard({product}: ProductInfoCardProps) {
                     />
                 </div>
 
-                <div className="space-y-3 border-t pt-6">
-                    <h2 className="text-lg font-semibold">وصف المنتج</h2>
+                <div className="rounded-3xl border border-border/70 bg-muted/30 p-5">
+                    <div className="mb-3 flex items-center gap-2">
+                        <ShieldCheck className="h-5 w-5 text-primary" />
+                        <h2 className="text-lg font-bold">وصف المنتج</h2>
+                    </div>
 
                     <p className="leading-8 text-muted-foreground">{product.description}</p>
                 </div>
@@ -67,13 +78,13 @@ type ProductMetaItemProps = {
 
 function ProductMetaItem({icon, label, value}: ProductMetaItemProps) {
     return (
-        <div className="rounded-2xl border bg-muted/30 p-4">
+        <div className="rounded-3xl border border-border/70 bg-background/70 p-4 transition-colors hover:bg-secondary/60">
             <div className="mb-2 flex items-center gap-2 text-sm text-muted-foreground">
-                {icon}
+                <span className="text-primary">{icon}</span>
                 <span>{label}</span>
             </div>
 
-            <p className="font-semibold">{value}</p>
+            <p className="font-bold text-foreground">{value}</p>
         </div>
     );
 }

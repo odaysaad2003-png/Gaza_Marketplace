@@ -1,3 +1,4 @@
+import {SectionHeading} from "@/components/shared/section-heading";
 import type {Product} from "../types/product.types";
 import {ProductCard} from "./product-card";
 
@@ -11,16 +12,16 @@ export function SimilarProductsSection({products}: SimilarProductsSectionProps) 
     }
 
     return (
-        <section className="space-y-5">
-            <div className="flex items-end justify-between gap-4">
-                <div>
-                    <h2 className="text-2xl font-bold tracking-tight">منتجات مشابهة</h2>
-
-                    <p className="mt-2 text-sm text-muted-foreground">منتجات من نفس التصنيف قد تهمك أيضًا.</p>
-                </div>
+        <section className="space-y-7">
+            <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+                <SectionHeading
+                    eyebrow="اقتراحات"
+                    title="منتجات مشابهة"
+                    description="منتجات من نفس التصنيف قد تهمك أيضًا."
+                />
             </div>
 
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4 xl:gap-6">
                 {products.map((product) => (
                     <ProductCard key={product.id} product={product} />
                 ))}
