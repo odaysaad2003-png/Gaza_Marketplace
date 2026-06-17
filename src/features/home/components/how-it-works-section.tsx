@@ -23,7 +23,7 @@ const steps = [
 
 export function HowItWorksSection() {
     return (
-        <section className="py-10">
+        <section className="py-8 sm:py-10">
             <SectionHeading
                 align="center"
                 eyebrow="طريقة الاستخدام"
@@ -31,14 +31,14 @@ export function HowItWorksSection() {
                 description="الصفحة مصممة لتكون قريبة من تجربة Marketplace حقيقية لكن بحجم تدريبي مناسب."
             />
 
-            <div className="mt-8 grid gap-5 md:grid-cols-3">
+            <div className="mt-8 grid gap-4 md:grid-cols-3 md:gap-5">
                 {steps.map((step, index) => {
                     const Icon = step.icon;
 
                     return (
                         <Card
                             key={step.title}
-                            className="rounded-3xl border-border/70 bg-card/80 p-6 text-center shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md"
+                            className="rounded-3xl border-border/70 bg-card/80 p-5 text-center shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md sm:p-6"
                         >
                             <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary">
                                 <Icon className="h-6 w-6" />

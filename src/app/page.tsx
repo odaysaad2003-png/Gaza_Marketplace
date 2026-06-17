@@ -11,12 +11,12 @@ export default async function HomePage() {
     const latestProducts = await getLatestProducts(8);
 
     return (
-        <MainContainer>
+        <MainContainer className="space-y-4 pb-10 sm:space-y-6 sm:pb-14">
             <HeroSection latestProducts={latestProducts} />
 
             <FeaturedCategoriesSection />
 
-            <section className="py-10">
+            <section className="py-8 sm:py-10">
                 <div className="mb-7 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
                     <SectionHeading
                         eyebrow="وصل حديثًا"
