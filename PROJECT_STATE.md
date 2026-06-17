@@ -14,11 +14,13 @@
 * Dark Mode
 * next-themes
 * TanStack Query / React Query
+* React Hook Form
+* Zod
 * Mock API فقط حاليًا
 * Local Storage للمفضلة
 * Feature-based architecture
 
-المشروع ليس فارغًا. هناك كود وميزات كثيرة تم بناؤها بالفعل. المطلوب منك البناء على الموجود، وليس إعادة المشروع من الصفر.
+المشروع ليس فارغًا. هناك كود وميزات كثيرة تم بناؤها بالفعل. المطلوب دائمًا البناء على الموجود، وليس إعادة المشروع من الصفر.
 
 ---
 
@@ -32,7 +34,7 @@ Mini Marketplace Gaza هو مشروع Marketplace عربي RTL تدريبي/اح
 
 * Backend
 * Database
-* Authentication
+* Authentication حقيقي
 * Payments
 * Chat
 * Donations
@@ -58,13 +60,18 @@ Mini Marketplace Gaza هو مشروع Marketplace عربي RTL تدريبي/اح
 * أعطني branch name و commit message.
 * بعد كل مرحلة اطلب مني:
 
-  * `npm run build`
-  * `git status`
+```bash
+npm run build
+git status
+```
+
 * لو ظهر error، حلله بهدوء.
 * الشرح يكون بالعربي.
 * المشروع عربي RTL وموجه لغزة.
 * حافظ على UI احترافي، ألوان هادئة، Dark/Light mode متناسق، Responsive ممتاز.
 * لا تكسر المنطق الموجود، خصوصًا React Query و Favorites localStorage و form validation.
+* لا تغيّر أسماء props أو state إلا بعد فحص الملفات.
+* لا تبدأ بكتابة كود قبل فحص الملفات المطلوبة من المشروع.
 
 ---
 
@@ -170,7 +177,7 @@ src/components/theme/theme-toggle.tsx
 src/components/providers/query-provider.tsx
 ```
 
-داخل `src/app/layout.tsx` يجب أن يكون الترتيب العام قريبًا من:
+داخل `src/app/layout.tsx` الترتيب العام يجب أن يبقى قريبًا من:
 
 ```tsx
 <QueryProvider>
@@ -188,7 +195,7 @@ src/components/providers/query-provider.tsx
 
 مهم جدًا:
 
-* الهيدر صار `fixed`.
+* الهيدر `fixed`.
 * لذلك `main` يجب أن يحتوي `pt-16`.
 * لا تغيّر ترتيب `QueryProvider` و `FavoritesProvider`.
 
@@ -196,11 +203,11 @@ src/components/providers/query-provider.tsx
 
 # 7. Design System الحالي
 
-تم تحسين `globals.css` لتكون الألوان قريبة من MVP visual reference:
+تم تحسين `globals.css` لتكون الألوان قريبة من MVP visual reference.
 
 ## Light Mode
 
-اتجاه الألوان:
+الاتجاه:
 
 * خلفية فاتحة جدًا مائلة للأخضر/الأزرق الهادئ.
 * كروت بيضاء.
@@ -358,7 +365,7 @@ src/components/layout/navbar.tsx
 src/lib/navigation.ts
 ```
 
-الأفضل حاليًا أن تكون الروابط الرئيسية فقط:
+الروابط الرئيسية حاليًا:
 
 ```ts
 export const mainNavItems = [
@@ -380,7 +387,8 @@ export const mainNavItems = [
 مهم:
 
 * `/products/create` يفضل أن يبقى CTA button وليس nav item.
-* لا تضف `/admin` الآن إذا الصفحة غير مبنية حتى لا نرسل المستخدم إلى 404.
+* لا تضف `/admin` إلى Navbar العام قبل بناء صفحة Admin Dashboard أو قبل القرار التصميمي.
+* لاحقًا ممكن نضيف رابط Admin في قائمة منفصلة أو CTA صغير حسب الخطة.
 
 ---
 
@@ -509,6 +517,8 @@ export const productQueryKeys = {
 };
 ```
 
+لا تكسر React Query provider ولا query keys بدون سبب واضح.
+
 ---
 
 # 14. Products Listing Page
@@ -553,6 +563,27 @@ src/features/products/components/products-listing-view.tsx
 * hover خفيف.
 * shadow ناعم.
 
+تم تحسين Responsive Filters ضمن Sprint 10.7:
+
+* على Desktop الفلاتر داخل card واضح.
+* على Mobile:
+
+  * البحث ظاهر مباشرة.
+  * sort ظاهر مباشرة.
+  * باقي الفلاتر داخل shadcn Sheet.
+  * زر “فلترة”.
+  * عداد للفلاتر النشطة.
+  * زر “مسح الفلاتر”.
+  * زر “عرض النتائج”.
+* تم الحفاظ على نفس `ProductFiltersState` ونفس props.
+* لم يتم كسر منطق الفلترة والفرز داخل `ProductsListingView`.
+
+Commit المقترح/المستخدم:
+
+```bash
+polish: improve responsive product filters
+```
+
 ---
 
 # 15. Product Details Page
@@ -592,7 +623,7 @@ src/features/products/components/similar-products-section.tsx
 
 تم تحسينها في Sprint 10.4:
 
-* Gallery أقوى.
+* Gallery polish.
 * Favorite button فوق الصورة.
 * Badges فوق الصورة.
 * Product info card أقوى.
@@ -600,6 +631,22 @@ src/features/products/components/similar-products-section.tsx
 * Seller card فيه WhatsApp و phone CTA.
 * Similar products تستخدم SectionHeading.
 * right column sticky على الشاشات الكبيرة.
+
+تم تحسين Responsive QA لها ضمن Sprint 10.8:
+
+* تقليل spacing على الموبايل.
+* تحسين skeleton.
+* جعل thumbnails تعمل horizontal scroll على الموبايل بدل الانضغاط.
+* تحسين title/price على 375px.
+* إصلاح كلاس غير مضمون `h-13 w-13` إلى `h-12 w-12`.
+* تحسين seller card والأزرار.
+* الحفاظ على sticky column فقط على desktop.
+
+Commit المقترح/المستخدم:
+
+```bash
+polish: improve product details responsive layout
+```
 
 ---
 
@@ -632,7 +679,7 @@ src/features/products/components/create-product-form.tsx
 * Helper text.
 * Image preview.
 * Side helper card.
-* Loading state.
+* Loading submit state.
 * Better submit/cancel UX.
 * Responsive grid.
 
@@ -663,6 +710,49 @@ const form = useForm<CreateProductFormInput, unknown, CreateProductFormValues>({
     contactMethod: "",
   },
 });
+```
+
+تم إصلاح خطأ TypeScript في `ImagePreview`:
+
+الخطأ كان:
+
+```txt
+Type 'string | undefined' is not assignable to type 'string | StaticImport'
+```
+
+الحل المعتمد:
+
+```ts
+const previewUrl = imageUrl?.trim() ?? "";
+```
+
+ثم تمرير:
+
+```tsx
+<Image src={previewUrl} ... />
+```
+
+تم أيضًا استخدام:
+
+```tsx
+unoptimized
+```
+
+في صورة المعاينة، لأن المستخدم قد يضع رابط `https://...` خارجي، وبدونه قد يطلب Next.js إعداد `remotePatterns` داخل `next.config.ts`.
+
+تم تحسين Responsive QA لها ضمن Sprint 10.8:
+
+* تقليل padding على الموبايل.
+* جعل form card وsections أكثر راحة.
+* الأزرار full width على الموبايل.
+* image preview ينزل تحت input على الشاشات الصغيرة.
+* side helper card ينزل تحت الفورم على الموبايل.
+* الحفاظ على react-hook-form و zod types.
+
+Commit المقترح/المستخدم:
+
+```bash
+polish: improve create product responsive form
 ```
 
 ---
@@ -706,13 +796,26 @@ use-favorites.tsx
 
 تم تحسين Favorites في Sprint 10.6:
 
-* Favorite button animation.
-* Active heart state.
-* Header card في صفحة المفضلة.
+* Favorite button polish.
+* Favorites header.
 * Counter.
-* Empty state أجمل.
-* Clear favorites UX.
-* لا تغيّر منطق `use-favorites.tsx` لأنه شغال وصحيح.
+* Empty state.
+* Clear favorites action.
+
+تم تحسين Responsive QA لها ضمن Sprint 10.8:
+
+* تقليل padding على الموبايل.
+* تحسين header والempty state.
+* الأزرار full width على الموبايل.
+* تحسين skeleton.
+* لم يتم لمس `use-favorites.tsx` لأنه صحيح وHydration-safe.
+* لم يتم لمس `favorite-button.tsx` لأنه يدعم `aria-pressed` ويمنع propagation داخل ProductCard.
+
+Commit المقترح/المستخدم:
+
+```bash
+polish: improve favorites responsive experience
+```
 
 ---
 
@@ -746,6 +849,22 @@ src/app/page.tsx
 * كروت rounded.
 * shadow خفيف.
 * modern Arabic marketplace.
+
+تم تحسين Responsive QA لها ضمن Sprint 10.8:
+
+* تقليل حجم Hero title على 375px.
+* جعل hero buttons full width على الموبايل.
+* تحسين trust points.
+* منع كرت أحدث المنتجات من كسر السعر أو النص.
+* تحسين category cards.
+* تحسين How It Works cards.
+* تحسين CTA final section.
+
+Commit المقترح/المستخدم:
+
+```bash
+polish: improve homepage responsive layout
+```
 
 ---
 
@@ -902,9 +1021,7 @@ polish: improve favorites empty state and interactions
 
 ---
 
-### Sprint 10.7 — Responsive QA Pass
-
-بدأنا فيه.
+### Sprint 10.7 — Responsive QA: Navigation + Product Filters
 
 Branch:
 
@@ -912,7 +1029,13 @@ Branch:
 polish/responsive-qa
 ```
 
-تم تنفيذ أهم جزء أولي:
+أو:
+
+```bash
+polish/responsive-product-filters
+```
+
+تم فيه:
 
 * Mobile burger menu في Navbar باستخدام shadcn Sheet.
 * Active links في mobile menu.
@@ -920,132 +1043,37 @@ polish/responsive-qa
 * القائمة تغلق تلقائيًا عند تغيير المسار.
 * Desktop nav لم يتكسر.
 * fixed header مع `main pt-16`.
+* Responsive product filters في `/products`.
+* Mobile Sheet للفلاتر.
+* عداد للفلاتر النشطة.
+* زر مسح الفلاتر.
+* Search و Sort بقوا سهلين الوصول على الموبايل.
 
-Commit المقترح لهذا الجزء:
+Commit messages:
 
 ```bash
-git commit -m "polish: add responsive mobile navigation"
+polish: add responsive mobile navigation
+polish: improve responsive product filters
 ```
 
 ---
 
-# 20. آخر حالة Build معروفة
+### Sprint 10.8 — Final Responsive QA
 
-آخر build قبل الانتقال كان ناجحًا أكثر من مرة:
-
-```bash
-npm run build
-```
-
-وكانت routes:
-
-```txt
-/
- /favorites
-/products
-/products/[slug]
-/products/create
-/_not-found
-```
-
-لكن في الشات الجديد يجب دائمًا أن تبدأ بـ:
+Branch:
 
 ```bash
-git status
-npm run build
+polish/final-responsive-qa
 ```
 
-قبل أي تعديل جديد.
+تم فيه:
 
----
-
-# 21. آخر طلب يجب تنفيذه في الشات الجديد
-
-أول مهمة تنفيذية في الشات الجديد هي إكمال Sprint 10.7:
-
-# تحسين Responsive Filters في صفحة المنتجات بشكل احترافي
-
-المطلوب تحديدًا:
-
-* تحسين `product-filters.tsx`.
-* تحسين responsive behavior في صفحة `/products`.
-* لا تكسر منطق الفلاتر الحالي.
-* لا تغيّر أسماء props أو state إلا بعد فحص الملفات.
-* على desktop يمكن أن تبقى الفلاتر كـ panel/card واضح.
-* على mobile يجب تحويل الفلاتر إلى زر واضح يفتح Sheet أو Drawer.
-* استخدام shadcn `Sheet` لأن المشروع مثبت فيه `sheet`.
-* زر مثل: "فلترة المنتجات".
-* إظهار عدد الفلاتر النشطة إن أمكن.
-* إضافة زر "مسح الفلاتر" داخل الموبايل والديكستوب.
-* Search field يجب أن يبقى سهل الوصول.
-* Sort يجب أن يكون واضح.
-* تجربة 375px / 390px / 430px / 640px / 768px / 1024px.
-* الحفاظ على RTL.
-* الحفاظ على Design Tokens:
-
-  * `bg-card`
-  * `bg-background`
-  * `text-foreground`
-  * `text-muted-foreground`
-  * `border-border`
-  * `primary`
-  * `secondary`
-* لا تستخدم ألوان مباشرة مثل:
-
-  * `bg-black`
-  * `text-gray-900`
-  * `dark:bg-black`
-
-## الملفات المحتمل تعديلها:
-
-```txt
-src/features/products/components/product-filters.tsx
-src/features/products/components/products-listing-view.tsx
-src/app/products/page.tsx
-```
-
-قد نضيف component اختياري:
-
-```txt
-src/features/products/components/mobile-product-filters.tsx
-```
-
-أو نضعه داخل نفس `product-filters.tsx` إذا كان أبسط.
-
-## قبل البدء يجب أن تطلب مني إرسال محتوى هذه الملفات:
-
-```txt
-src/features/products/components/product-filters.tsx
-src/features/products/components/products-listing-view.tsx
-src/app/products/page.tsx
-```
-
-ثم بعد فحصها أعطني تعديل آمن.
-
-## Branch المطلوب:
-
-```bash
-git checkout -b polish/responsive-product-filters
-```
-
-أو إذا كنا ما زلنا داخل `polish/responsive-qa` نكمل عليه حسب حالة git.
-
-## Commit message المقترح:
-
-```bash
-git commit -m "polish: improve responsive product filters"
-```
-
-## بعد التنفيذ:
-
-اطلب مني:
-
-```bash
-npm run build
-git status
-```
-
-ثم نراجع responsive يدويًا على:
+* تحسين Home responsive layout.
+* تحسين Product Details responsive layout.
+* تحسين Create Product responsive form.
+* تحسين Favorites responsive experience.
+* إصلاح TypeScript في ImagePreview.
+* فحص المقاسات:
 
 ```txt
 375px
@@ -1058,31 +1086,325 @@ git status
 1440px
 ```
 
+Commit messages المقترحة/المستخدمة:
+
+```bash
+polish: improve homepage responsive layout
+polish: improve product details responsive layout
+polish: improve create product responsive form
+polish: improve favorites responsive experience
+fix: make product image preview src type-safe
+```
+
+يمكن أن يكون fix الخاص بـ ImagePreview داخل commit صفحة Create Product أو commit مستقل.
+
 ---
 
-# 22. طريقة بدء الشات الجديد
+# 20. آخر حالة Build معروفة
 
-ابدأ الشات الجديد بهذه الرسالة:
+آخر build بعد Responsive QA كان ناجحًا حسب المستخدم.
+
+دائمًا في الشات الجديد يجب البدء بـ:
+
+```bash
+git status
+npm run build
+```
+
+قبل أي تعديل جديد.
+
+Routes الحالية تقريبًا:
 
 ```txt
-اقرأ PROJECT_STATE.md هذا، واشتغل معي كسينيور سوفتوير انجينير على نفس المشروع بدون إعادة من الصفر. آخر مهمة مطلوبة الآن هي Sprint 10.7 — تحسين Responsive Filters في صفحة المنتجات بشكل احترافي. قبل ما تكتب أي كود اطلب مني git status و npm run build، ثم اطلب ملفات product-filters.tsx و products-listing-view.tsx و app/products/page.tsx عشان تعدل بدون كسر المنطق.
+/
+ /favorites
+/products
+/products/[slug]
+/products/create
+/_not-found
 ```
 
 ---
 
-# 23. قواعد مهمة للشات الجديد
+# 21. آخر طلب يجب تنفيذه في الشات الجديد
 
-* لا تبدأ Admin Dashboard الآن.
-* لا تعيد بناء المشروع من الصفر.
-* لا تغيّر المنطق الموجود إذا المطلوب UI polish فقط.
+المهمة الجديدة المطلوبة الآن:
+
+# Phase 11 — Admin Dashboard احترافي
+
+المطلوب البدء ببناء Admin Dashboard احترافي كميزة جديدة، لكن على مراحل وبدون كسر المشروع الحالي.
+
+## الهدف
+
+إضافة Admin Dashboard تدريبية/Portfolio داخل المشروع تعرض نظرة إدارية على المنتجات الحالية من الـ Mock API.
+
+هذه ليست لوحة تحكم Backend حقيقية ولا فيها Authentication حقيقي الآن. الهدف Portfolio Frontend فقط.
+
+## المطلوب مبدئيًا
+
+ابدأ بتحليل وبناء خطة Admin Dashboard احترافية قبل كتابة الكود.
+
+لا تكتب كود مباشرة قبل فحص الملفات الحالية.
+
+## أول خطوة في الشات الجديد
+
+ابدأ بهذه الرسالة:
+
+```txt
+اقرأ PROJECT_STATE.md هذا، واشتغل معي كسينيور سوفتوير انجينير على نفس مشروع Mini Marketplace Gaza بدون إعادة من الصفر. آخر حالة build كانت ناجحة بعد Sprint 10.8 Final Responsive QA. الآن نريد البدء بـ Phase 11 — Admin Dashboard احترافي. قبل كتابة أي كود اطلب مني git status و npm run build، ثم اطلب الملفات التي تحتاج فحصها لبناء Admin Dashboard بدون كسر المشروع.
+```
+
+## قبل البدء اطلب مني تنفيذ:
+
+```bash
+git status
+npm run build
+```
+
+ثم اطلب مني إرسال الملفات التالية على الأقل:
+
+```txt
+src/app/layout.tsx
+src/lib/navigation.ts
+src/components/layout/navbar.tsx
+src/features/products/api/products.mock-api.ts
+src/features/products/hooks/use-products.ts
+src/features/products/types/product.types.ts
+src/features/products/components/product-card.tsx
+src/components/ui/table.tsx
+src/components/ui/dropdown-menu.tsx
+```
+
+وقد نحتاج أيضًا:
+
+```txt
+src/components/layout/main-container.tsx
+src/components/shared/section-heading.tsx
+src/lib/formatters.ts
+src/features/products/constants/product-options.ts
+```
+
+---
+
+# 22. Admin Dashboard — الخطة المقترحة
+
+## Branch المقترح
+
+```bash
+git checkout -b feature/admin-dashboard
+```
+
+## Commit message النهائي المقترح لأول نسخة
+
+```bash
+git commit -m "feat: add admin dashboard overview"
+```
+
+---
+
+# 23. نطاق Admin Dashboard الأول
+
+## المسار المقترح
+
+```txt
+/admin
+```
+
+## ملفات محتملة
+
+```txt
+src/app/admin/page.tsx
+src/features/admin/components/admin-dashboard-view.tsx
+src/features/admin/components/admin-stat-card.tsx
+src/features/admin/components/admin-products-table.tsx
+src/features/admin/components/admin-empty-state.tsx
+src/features/admin/utils/admin-stats.ts
+```
+
+أو إذا أردنا تقليل الملفات بالبداية:
+
+```txt
+src/app/admin/page.tsx
+src/features/admin/components/admin-dashboard-view.tsx
+```
+
+ثم نفصل لاحقًا.
+
+## لا نبدأ Auth الآن
+
+لا نضيف:
+
+* Login
+* Middleware auth
+* NextAuth
+* Roles حقيقية
+* Backend permissions
+
+ممكن فقط نضيف ملاحظة UI:
+
+```txt
+لوحة تحكم تدريبية — لا يوجد تسجيل دخول حقيقي بعد
+```
+
+---
+
+# 24. مكونات Admin Dashboard المقترحة
+
+أول نسخة احترافية يجب أن تحتوي:
+
+## 1. Header Section
+
+* Badge: لوحة الإدارة
+* Title: إدارة السوق
+* Description: نظرة سريعة على المنتجات والتصنيفات والمدن داخل Mini Marketplace Gaza
+* CTA صغير إلى `/products/create`
+* CTA إلى `/products`
+
+## 2. Stats Cards
+
+إحصائيات من المنتجات الحالية:
+
+* إجمالي المنتجات
+* المنتجات المميزة
+* عدد المدن الموجودة
+* متوسط السعر أو أعلى سعر
+* عدد التصنيفات المستخدمة
+
+## 3. Products Management Table
+
+جدول إداري يعرض:
+
+* المنتج
+* التصنيف
+* المدينة
+* الحالة
+* السعر
+* تاريخ النشر
+* مميز أم لا
+* actions dropdown
+
+Actions مبدئية بدون backend:
+
+* عرض المنتج
+* تعديل لاحقًا — disabled أو label “قريبًا”
+* حذف لاحقًا — disabled أو label “قريبًا”
+
+لا تنفذ delete حقيقي الآن إلا إذا قررنا لاحقًا.
+
+## 4. Insights Section
+
+كروت أو قائمة تعرض:
+
+* أكثر تصنيف يحتوي منتجات
+* أكثر مدينة تحتوي منتجات
+* أغلى منتج
+* أحدث منتج
+
+## 5. Responsive
+
+يجب أن يكون ممتاز على:
+
+```txt
+375px
+390px
+430px
+640px
+768px
+1024px
+1280px
+1440px
+```
+
+على الموبايل:
+
+* يمكن تحويل الجدول إلى cards أو horizontal scroll.
+* لا تكسر layout.
+* حافظ على RTL.
+* الأزرار full width عند الحاجة.
+
+## 6. Design Tokens
+
+استخدم فقط:
+
+```txt
+bg-card
+bg-background
+text-foreground
+text-muted-foreground
+border-border
+primary
+secondary
+muted
+destructive
+```
+
+لا تستخدم:
+
+```txt
+bg-black
+text-gray-900
+dark:bg-black
+```
+
+---
+
+# 25. Admin Dashboard — قواعد هندسية مهمة
+
 * لا تكسر React Query.
-* لا تكسر FavoritesProvider.
-* لا تكسر Zod form types.
-* لا تخلط branches.
-* بعد كل Sprint:
+* لا تغيّر products mock api إلا إذا احتجنا method آمن.
+* لا تضف admin إلى navbar قبل بناء صفحة `/admin`.
+* بعد بناء `/admin` ممكن نضيف link في navigation أو CTA حسب القرار.
+* لا نضيف Backend أو Auth الآن.
+* لا نضيف مكتبات جديدة إلا عند الحاجة.
+* استخدم shadcn `Table` لو موجود.
+* استخدم `DropdownMenu` لو موجود.
+* استخدم `lucide-react` للأيقونات.
+* استخدم `formatPrice` و `formatDate`.
+* استخدم `useProducts` داخل Client Component للـ dashboard.
+* `src/app/admin/page.tsx` يمكن أن يكون Server Component يستدعي Client View.
 
-  * build
-  * git status
-  * commit
-* أي error يتم تحليله بهدوء.
-* الشرح دائمًا بالعربي.
+---
+
+# 26. صيغة العمل في الشات الجديد
+
+بعد قراءة الملف، الشات الجديد يجب أن يقول للمستخدم:
+
+1. نفّذ:
+
+```bash
+git status
+npm run build
+```
+
+2. إذا كل شيء نظيف، افتح branch:
+
+```bash
+git checkout -b feature/admin-dashboard
+```
+
+3. أرسل الملفات المطلوبة للفحص:
+
+```txt
+src/app/layout.tsx
+src/lib/navigation.ts
+src/components/layout/navbar.tsx
+src/features/products/api/products.mock-api.ts
+src/features/products/hooks/use-products.ts
+src/features/products/types/product.types.ts
+src/components/ui/table.tsx
+src/components/ui/dropdown-menu.tsx
+src/lib/formatters.ts
+```
+
+4. بعد فحص الملفات، يبدأ التنفيذ خطوة خطوة.
+
+---
+
+# 27. ملاحظات نهائية
+
+* المشروع الآن في مرحلة UI/UX قوية ومستقرة.
+* Phase 10 انتهت تقريبًا.
+* Phase 11 تبدأ بلوحة الإدارة.
+* Admin Dashboard يجب أن تكون Portfolio feature احترافية، لكن صادقة: Frontend/Mock فقط.
+* لا نعمل Admin Dashboard كأنها نظام حقيقي فيه صلاحيات قبل وجود Auth/Backend.
+* الهدف من Admin Dashboard: إظهار قدرة على بناء واجهات إدارية، جداول، إحصائيات، responsive layout، وتنظيم feature-based architecture.
