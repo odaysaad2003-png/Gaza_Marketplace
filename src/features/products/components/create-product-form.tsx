@@ -368,7 +368,12 @@ function FormField({label, helper, error, children}: FormFieldProps) {
 }
 
 function ImagePreview({imageUrl}: {imageUrl?: string}) {
-    const canPreview = imageUrl?.startsWith("/") || imageUrl?.startsWith("http://") || imageUrl?.startsWith("https://");
+    const previewUrl = imageUrl?.trim() ?? "";
+
+    const canPreview =
+        previewUrl.startsWith("/") ||
+        previewUrl.startsWith("http://") ||
+        previewUrl.startsWith("https://");
 
     if (!canPreview) {
         return (
@@ -382,7 +387,7 @@ function ImagePreview({imageUrl}: {imageUrl?: string}) {
 
     return (
         <div className="relative min-h-40 overflow-hidden rounded-3xl border border-border/70 bg-muted">
-            <Image src={imageUrl} alt="معاينة صورة المنتج" fill sizes="256px" className="object-cover" />
+            <Image src={previewUrl} alt="معاينة صورة المنتج" fill sizes="256px" className="object-cover" />
         </div>
     );
 }
