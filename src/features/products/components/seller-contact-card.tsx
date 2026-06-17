@@ -18,22 +18,22 @@ export function SellerContactCard({product}: SellerContactCardProps) {
         : undefined;
 
     return (
-        <Card className="overflow-hidden rounded-[2rem] border-border/70 bg-card/90 shadow-sm shadow-black/[0.03] dark:shadow-black/20">
-            <CardHeader className="border-b border-border/70 bg-muted/25">
-                <CardTitle className="flex items-center gap-2 text-lg">
+        <Card className="overflow-hidden rounded-[1.75rem] border-border/70 bg-card/90 shadow-sm shadow-black/[0.03] dark:shadow-black/20 sm:rounded-[2rem]">
+            <CardHeader className="border-b border-border/70 bg-muted/25 px-5 py-4 sm:px-6">
+                <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
                     <UserRound className="h-5 w-5 text-primary" />
                     بيانات البائع
                 </CardTitle>
             </CardHeader>
 
-            <CardContent className="space-y-5 p-6">
+            <CardContent className="space-y-5 p-5 sm:p-6">
                 <div className="flex items-center gap-4 rounded-3xl border border-border/70 bg-background/70 p-4">
-                    <div className="flex h-13 w-13 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-sm shadow-primary/20">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-sm shadow-primary/20">
                         <UserRound className="h-6 w-6" />
                     </div>
 
-                    <div>
-                        <h3 className="font-bold text-foreground">{product.sellerName}</h3>
+                    <div className="min-w-0">
+                        <h3 className="line-clamp-1 font-bold text-foreground">{product.sellerName}</h3>
                         <p className="mt-1 text-sm text-muted-foreground">بائع محلي داخل غزة</p>
                     </div>
                 </div>
@@ -46,19 +46,19 @@ export function SellerContactCard({product}: SellerContactCardProps) {
 
                     {product.sellerPhone ? (
                         <div className="flex items-center gap-2 font-bold text-foreground">
-                            <Phone className="h-4 w-4 text-primary" />
+                            <Phone className="h-4 w-4 shrink-0 text-primary" />
                             <span dir="ltr">{product.sellerPhone}</span>
                         </div>
                     ) : (
                         <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                            <AlertCircle className="h-4 w-4 text-primary" />
+                            <AlertCircle className="h-4 w-4 shrink-0 text-primary" />
                             لا يوجد رقم تواصل مضاف لهذا المنتج.
                         </div>
                     )}
 
                     {product.contactMethod ? (
                         <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                            <MessageCircle className="h-4 w-4 text-primary" />
+                            <MessageCircle className="h-4 w-4 shrink-0 text-primary" />
                             <span>{product.contactMethod}</span>
                         </div>
                     ) : null}

@@ -12,7 +12,7 @@ export function SimilarProductsSection({products}: SimilarProductsSectionProps) 
     }
 
     return (
-        <section className="space-y-7">
+        <section className="space-y-6 sm:space-y-7">
             <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
                 <SectionHeading
                     eyebrow="اقتراحات"
@@ -21,7 +21,7 @@ export function SimilarProductsSection({products}: SimilarProductsSectionProps) 
                 />
             </div>
 
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4 xl:gap-6">
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 xl:gap-6">
                 {products.map((product) => (
                     <ProductCard key={product.id} product={product} />
                 ))}

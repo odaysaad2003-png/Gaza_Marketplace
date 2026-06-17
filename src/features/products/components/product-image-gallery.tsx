@@ -25,7 +25,7 @@ export function ProductImageGallery({images, title, productId, isFeatured = fals
 
     return (
         <div className="space-y-4">
-            <div className="relative aspect-[4/3] overflow-hidden rounded-[2rem] border border-border/70 bg-muted shadow-xl shadow-black/[0.05] dark:shadow-black/20">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-[1.75rem] border border-border/70 bg-muted shadow-xl shadow-black/[0.05] dark:shadow-black/20 sm:rounded-[2rem]">
                 {selectedImage ? (
                     <Image
                         src={selectedImage}
@@ -43,11 +43,11 @@ export function ProductImageGallery({images, title, productId, isFeatured = fals
 
                 <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-black/5 to-transparent" />
 
-                <div className="absolute left-4 top-4 z-10">
+                <div className="absolute left-3 top-3 z-10 sm:left-4 sm:top-4">
                     <FavoriteButton productId={productId} />
                 </div>
 
-                <div className="absolute right-4 top-4 z-10 flex items-center gap-2">
+                <div className="absolute right-3 top-3 z-10 flex flex-wrap items-center gap-2 sm:right-4 sm:top-4">
                     {isFeatured ? (
                         <Badge className="rounded-full bg-primary px-3 py-1 text-primary-foreground shadow-sm">
                             مميز
@@ -61,37 +61,39 @@ export function ProductImageGallery({images, title, productId, isFeatured = fals
             </div>
 
             {safeImages.length > 1 ? (
-                <div className="grid grid-cols-4 gap-3 sm:grid-cols-5">
-                    {safeImages.map((image, index) => {
-                        const isSelected = image === selectedImage;
+                <div className="-mx-1 overflow-x-auto px-1 pb-1">
+                    <div className="grid min-w-max grid-flow-col auto-cols-[5rem] gap-3 sm:min-w-0 sm:grid-flow-row sm:grid-cols-5">
+                        {safeImages.map((image, index) => {
+                            const isSelected = image === selectedImage;
 
-                        return (
-                            <button
-                                key={`${image}-${index}`}
-                                type="button"
-                                onClick={() => setSelectedImage(image)}
-                                className={cn(
-                                    "relative aspect-square overflow-hidden rounded-2xl border bg-muted shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:opacity-95",
-                                    isSelected
-                                        ? "border-primary ring-2 ring-primary/30"
-                                        : "border-border/70 hover:border-primary/30"
-                                )}
-                                aria-label={`عرض صورة ${index + 1} للمنتج`}
-                            >
-                                <Image
-                                    src={image}
-                                    alt={`${title} - صورة ${index + 1}`}
-                                    fill
-                                    sizes="120px"
-                                    className="object-cover"
-                                />
+                            return (
+                                <button
+                                    key={`${image}-${index}`}
+                                    type="button"
+                                    onClick={() => setSelectedImage(image)}
+                                    className={cn(
+                                        "relative aspect-square overflow-hidden rounded-2xl border bg-muted shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:opacity-95",
+                                        isSelected
+                                            ? "border-primary ring-2 ring-primary/30"
+                                            : "border-border/70 hover:border-primary/30"
+                                    )}
+                                    aria-label={`عرض صورة ${index + 1} للمنتج`}
+                                >
+                                    <Image
+                                        src={image}
+                                        alt={`${title} - صورة ${index + 1}`}
+                                        fill
+                                        sizes="120px"
+                                        className="object-cover"
+                                    />
 
-                                {isSelected ? (
-                                    <span className="absolute inset-x-3 bottom-2 h-1 rounded-full bg-primary" />
-                                ) : null}
-                            </button>
-                        );
-                    })}
+                                    {isSelected ? (
+                                        <span className="absolute inset-x-3 bottom-2 h-1 rounded-full bg-primary" />
+                                    ) : null}
+                                </button>
+                            );
+                        })}
+                    </div>
                 </div>
             ) : null}
         </div>
