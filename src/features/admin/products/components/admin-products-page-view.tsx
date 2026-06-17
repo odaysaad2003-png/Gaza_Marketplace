@@ -8,8 +8,7 @@ import {Button} from "@/components/ui/button";
 import {Card, CardContent} from "@/components/ui/card";
 import {SkeletonList} from "@/components/shared/loading-skeleton";
 import {useProducts} from "@/features/products/hooks/use-products";
-import {AdminProductsTable} from "@/features/admin/components/admin-products-table";
-
+import {AdminProductsTable} from "./admin-products-table";
 import {AdminProductsEmptyState} from "./admin-products-empty-state";
 import {AdminProductsToolbar} from "./admin-products-toolbar";
 import {filterAdminProducts, getActiveAdminFiltersCount} from "../utils/filter-admin-products";
@@ -52,12 +51,12 @@ export function AdminProductsPageView() {
 
                             <div className="space-y-2">
                                 <h1 className="text-2xl font-black tracking-tight text-foreground sm:text-3xl">
-                                    Products Management
+                                    إدارة عمليات المنتجات
                                 </h1>
 
                                 <p className="text-sm leading-7 text-muted-foreground sm:text-base">
-                                    صفحة إدارية لفرز ومراجعة منتجات السوق الحالية. العمليات الحساسة مثل التعديل والحذف
-                                    مؤجلة حتى مرحلة Backend و Auth.
+                                    لوحة تشغيلية لمراجعة المنتجات، فرزها، متابعة حالتها الإدارية، وفحص بيانات البائعين.
+                                    وتجهّز الواجهة لمرحلة Backend لاحقًا.
                                 </p>
                             </div>
                         </div>

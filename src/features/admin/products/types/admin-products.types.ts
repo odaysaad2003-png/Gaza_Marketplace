@@ -4,6 +4,8 @@ export type AdminFeaturedFilter = "all" | "featured" | "normal";
 
 export type AdminProductsSort = "latest" | "oldest" | "price-asc" | "price-desc";
 
+export type AdminProductStatus = "published" | "pending_review" | "needs_attention";
+
 export type AdminProductsFiltersState = {
     search: string;
     category: ProductCategory | "all";
