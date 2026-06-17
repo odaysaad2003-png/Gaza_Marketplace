@@ -165,7 +165,7 @@ export const mockProducts: Product[] = [
         condition: "مستعمل - ممتاز",
         images: [
             "/products/مكتب دراسة.webp",
-            "https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?q=80&w=1200&auto=format&fit=crop"
+            "https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?q=80&w=1200&auto=format&fit=crop",
         ],
         sellerName: "مؤمن ابو القمبز",
         sellerPhone: "0595433291",
