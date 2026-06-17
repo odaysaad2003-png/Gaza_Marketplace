@@ -5,7 +5,6 @@ import {BarChart3, Boxes, Building2, FolderKanban, PackageCheck, Plus, ShoppingB
 
 import {Button} from "@/components/ui/button";
 import {Card, CardContent} from "@/components/ui/card";
-import {MainContainer} from "@/components/layout/main-container";
 import {SkeletonList} from "@/components/shared/loading-skeleton";
 import {formatPrice} from "@/lib/formatters";
 import {useProducts} from "@/features/products/hooks/use-products";
@@ -22,7 +21,7 @@ export function AdminDashboardView() {
     const stats = getAdminStats(products);
 
     return (
-        <MainContainer className="py-8 sm:py-10 lg:py-12">
+        
             <div className="space-y-8">
                 <section className="overflow-hidden rounded-[2rem] border border-border/70 bg-card/85 shadow-sm shadow-black/[0.03]">
                     <div className="relative p-5 sm:p-7 lg:p-8">
@@ -126,7 +125,7 @@ export function AdminDashboardView() {
                     </>
                 )}
             </div>
-        </MainContainer>
+       
     );
 }
 
