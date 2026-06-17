@@ -1,6 +1,13 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import {ArrowLeft, CalendarDays, MapPin} from "lucide-react";
+
+import {Swiper, SwiperSlide} from "swiper/react";
+import {Autoplay} from "swiper/modules";
+
+import "swiper/css";
 
 import {Badge} from "@/components/ui/badge";
 import {Card, CardContent, CardFooter} from "@/components/ui/card";
@@ -21,15 +28,34 @@ export function ProductCard({product}: ProductCardProps) {
             <div className="relative">
                 <Link href={`/products/${product.slug}`} className="block">
                     <div className="relative aspect-[4/3] overflow-hidden bg-muted">
-                        <Image
-                            src={mainImage}
-                            alt={product.title}
-                            fill
-                            sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                            className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        />
+                        <Swiper
+                            modules={[Autoplay]}
+                            autoplay={{delay: 2500}}
+                            loop={product.images.length > 1}
+                            className="h-full w-full"
+                        >
+                            {product.images.map((img, index) => (
+                                <SwiperSlide key={index}>
+                                    <Image
+                                        src={img}
+                                        alt={product.title}
+                                        fill
+                                        sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                                    />
+                                </SwiperSlide>
+                            ))}
+                        </Swiper>
 
+                        {/* fallback gradient overlay (زي ما هو عندك) */}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-black/5 to-transparent opacity-70 transition-opacity duration-300 group-hover:opacity-90" />
+                        {product.images.length > 1 && (
+                            <div className="absolute bottom-2 left-1/2 z-10 flex -translate-x-1/2 gap-1">
+                                {product.images.map((_, i) => (
+                                    <span key={i} className="h-1 w-1 rounded-full bg-white/70" />
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </Link>
 
