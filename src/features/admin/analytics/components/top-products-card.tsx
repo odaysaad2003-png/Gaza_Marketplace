@@ -32,7 +32,7 @@ export function TopProductsCard({title, description, products, valueType}: TopPr
                     <Link
                         key={product.id}
                         href={`/products/${product.slug}`}
-                        className="flex items-center justify-between gap-4 rounded-xl border border-border bg-background p-4 transition hover:bg-muted/50"
+                        className="flex flex-col gap-3 rounded-xl border border-border bg-background p-4 transition hover:bg-muted/50 sm:flex-row sm:items-center sm:justify-between"
                     >
                         <div className="flex min-w-0 items-center gap-3">
                             <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-muted text-sm font-semibold text-muted-foreground">
@@ -48,7 +48,7 @@ export function TopProductsCard({title, description, products, valueType}: TopPr
                             </div>
                         </div>
 
-                        <div className="shrink-0 text-sm font-semibold text-foreground">
+                        <div className="shrink-0 text-sm font-semibold text-foreground sm:text-end">
                             {valueType === "price" ? formatPrice(product.price) : formatDate(product.createdAt)}
                         </div>
                     </Link>

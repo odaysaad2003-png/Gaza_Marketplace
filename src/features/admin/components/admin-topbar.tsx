@@ -12,9 +12,9 @@ type AdminTopbarProps = {
 
 export function AdminTopbar({onOpenSidebar}: AdminTopbarProps) {
     return (
-        <div className="sticky top-16 z-30 border-b border-border/70 bg-background/85 backdrop-blur-xl">
-            <div className="flex h-16 items-center justify-between gap-3 px-4 sm:px-6">
-                <div className="flex items-center gap-3">
+        <div className="sticky top-0 z-30 border-b border-border bg-background/95 backdrop-blur">
+            <div className="flex h-16 items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
+                <div className="flex min-w-0 items-center gap-3">
                     <Button
                         type="button"
                         variant="outline"
@@ -34,7 +34,7 @@ export function AdminTopbar({onOpenSidebar}: AdminTopbarProps) {
                     </div>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex shrink-0 items-center gap-2">
                     <ThemeToggle />
 
                     <Button asChild variant="outline" className="hidden rounded-full sm:inline-flex">

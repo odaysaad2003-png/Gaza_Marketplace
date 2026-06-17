@@ -15,7 +15,7 @@ export function AdminChartCard({title, description, children}: AdminChartCardPro
                 {description ? <p className="text-sm leading-6 text-muted-foreground">{description}</p> : null}
             </div>
 
-            <div className="h-72 w-full">{children}</div>
+            <div className="h-64 w-full sm:h-72 lg:h-80">{children}</div>
         </section>
     );
 }
