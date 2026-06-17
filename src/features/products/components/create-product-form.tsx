@@ -1,5 +1,6 @@
 "use client";
 
+import type {ReactNode} from "react";
 import Image from "next/image";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {ImageIcon, Info, Loader2, MapPin, PackagePlus, Phone, Tag, UserRound} from "lucide-react";
@@ -69,10 +70,10 @@ export function CreateProductForm() {
     }
 
     return (
-        <Card className="overflow-hidden rounded-[2rem] border-border/70 bg-card/90 shadow-sm shadow-black/[0.03]">
-            <CardHeader className="border-b border-border/70 bg-muted/25 p-6">
-                <CardTitle className="flex items-center gap-2 text-2xl">
-                    <PackagePlus className="h-6 w-6 text-primary" />
+        <Card className="min-w-0 overflow-hidden rounded-[1.75rem] border-border/70 bg-card/90 shadow-sm shadow-black/[0.03] sm:rounded-[2rem]">
+            <CardHeader className="border-b border-border/70 bg-muted/25 p-5 sm:p-6">
+                <CardTitle className="flex items-center gap-2 text-xl sm:text-2xl">
+                    <PackagePlus className="h-6 w-6 shrink-0 text-primary" />
                     بيانات المنتج
                 </CardTitle>
 
@@ -81,14 +82,14 @@ export function CreateProductForm() {
                 </p>
             </CardHeader>
 
-            <CardContent className="p-6">
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+            <CardContent className="p-5 sm:p-6">
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 sm:space-y-8">
                     <FormSection
                         icon={<Tag className="h-5 w-5" />}
                         title="معلومات المنتج الأساسية"
                         description="اكتب عنوانًا واضحًا ووصفًا يساعد المشتري يفهم المنتج بسرعة."
                     >
-                        <div className="grid gap-5 lg:grid-cols-2">
+                        <div className="grid gap-5 md:grid-cols-2">
                             <FormField
                                 label="عنوان المنتج"
                                 helper="مثال: هاتف سامسونج Galaxy A52 بحالة ممتازة"
@@ -135,7 +136,7 @@ export function CreateProductForm() {
                         title="التصنيف والموقع"
                         description="هذه البيانات تساعد المستخدمين في البحث والفلترة."
                     >
-                        <div className="grid gap-5 lg:grid-cols-3">
+                        <div className="grid gap-5 md:grid-cols-3">
                             <FormField label="التصنيف" error={errors.category?.message}>
                                 <Select
                                     value={selectedCategory}
@@ -212,7 +213,7 @@ export function CreateProductForm() {
                         title="صورة المنتج"
                         description="في هذه المرحلة نستخدم رابط صورة واحد فقط، ويمكن لاحقًا تطويرها لرفع صور متعددة."
                     >
-                        <div className="grid gap-5 lg:grid-cols-[1fr_16rem]">
+                        <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_16rem]">
                             <FormField
                                 label="رابط صورة المنتج"
                                 helper="مثال: /products/samsung-galaxy-a52.webp أو رابط https خارجي."
@@ -235,7 +236,7 @@ export function CreateProductForm() {
                         title="بيانات البائع"
                         description="اكتب بيانات تواصل واضحة. في هذا المشروع البيانات تدريبية وليست حقيقية."
                     >
-                        <div className="grid gap-5 lg:grid-cols-2">
+                        <div className="grid gap-5 md:grid-cols-2">
                             <FormField
                                 label="اسم البائع"
                                 helper="اكتب اسمًا واضحًا يظهر داخل صفحة المنتج."
@@ -281,11 +282,11 @@ export function CreateProductForm() {
                         </div>
                     ) : null}
 
-                    <div className="flex flex-col gap-3 border-t border-border/70 pt-6 sm:flex-row sm:justify-end">
+                    <div className="grid gap-3 border-t border-border/70 pt-5 sm:flex sm:justify-end sm:pt-6">
                         <Button
                             type="button"
                             variant="outline"
-                            className="rounded-full px-6"
+                            className="w-full rounded-full px-6 sm:w-auto"
                             onClick={() => router.push("/products")}
                             disabled={createProductMutation.isPending}
                         >
@@ -295,7 +296,7 @@ export function CreateProductForm() {
                         <Button
                             type="submit"
                             disabled={createProductMutation.isPending}
-                            className="min-w-44 rounded-full px-6 shadow-sm shadow-primary/20 transition-all duration-200 hover:-translate-y-0.5"
+                            className="w-full rounded-full px-6 shadow-sm shadow-primary/20 transition-all duration-200 hover:-translate-y-0.5 sm:w-auto sm:min-w-44"
                         >
                             {createProductMutation.isPending ? (
                                 <>
@@ -317,21 +318,21 @@ export function CreateProductForm() {
 }
 
 type FormSectionProps = {
-    icon: React.ReactNode;
+    icon: ReactNode;
     title: string;
     description: string;
-    children: React.ReactNode;
+    children: ReactNode;
 };
 
 function FormSection({icon, title, description, children}: FormSectionProps) {
     return (
-        <section className="rounded-[1.75rem] border border-border/70 bg-background/60 p-5">
+        <section className="rounded-[1.5rem] border border-border/70 bg-background/60 p-4 sm:rounded-[1.75rem] sm:p-5">
             <div className="mb-5 flex gap-3">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary sm:h-11 sm:w-11">
                     {icon}
                 </div>
 
-                <div>
+                <div className="min-w-0">
                     <h3 className="font-bold text-foreground">{title}</h3>
                     <p className="mt-1 text-sm leading-6 text-muted-foreground">{description}</p>
                 </div>
@@ -346,12 +347,12 @@ type FormFieldProps = {
     label: string;
     helper?: string;
     error?: string;
-    children: React.ReactNode;
+    children: ReactNode;
 };
 
 function FormField({label, helper, error, children}: FormFieldProps) {
     return (
-        <div className="space-y-2">
+        <div className="min-w-0 space-y-2">
             <label className="text-sm font-bold text-foreground">{label}</label>
             {children}
 
@@ -371,13 +372,11 @@ function ImagePreview({imageUrl}: {imageUrl?: string}) {
     const previewUrl = imageUrl?.trim() ?? "";
 
     const canPreview =
-        previewUrl.startsWith("/") ||
-        previewUrl.startsWith("http://") ||
-        previewUrl.startsWith("https://");
+        previewUrl.startsWith("/") || previewUrl.startsWith("http://") || previewUrl.startsWith("https://");
 
     if (!canPreview) {
         return (
-            <div className="flex min-h-40 flex-col items-center justify-center rounded-3xl border border-dashed border-border bg-muted/40 p-5 text-center">
+            <div className="flex min-h-44 flex-col items-center justify-center rounded-3xl border border-dashed border-border bg-muted/40 p-5 text-center xl:min-h-40">
                 <ImageIcon className="h-8 w-8 text-muted-foreground" />
                 <p className="mt-3 text-sm font-medium text-foreground">معاينة الصورة</p>
                 <p className="mt-1 text-xs leading-5 text-muted-foreground">ستظهر الصورة هنا عند إدخال رابط صحيح.</p>
@@ -386,8 +385,15 @@ function ImagePreview({imageUrl}: {imageUrl?: string}) {
     }
 
     return (
-        <div className="relative min-h-40 overflow-hidden rounded-3xl border border-border/70 bg-muted">
-            <Image src={previewUrl} alt="معاينة صورة المنتج" fill sizes="256px" className="object-cover" />
+        <div className="relative min-h-44 overflow-hidden rounded-3xl border border-border/70 bg-muted xl:min-h-40">
+            <Image
+                src={previewUrl}
+                alt="معاينة صورة المنتج"
+                fill
+                sizes="(min-width: 1280px) 256px, 100vw"
+                className="object-cover"
+                unoptimized
+            />
         </div>
     );
 }
